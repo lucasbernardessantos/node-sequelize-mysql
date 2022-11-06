@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize"
-import { sequelize } from "../db.js"
+import { db } from "../db.js"
+
+let sequelize = db.criarConexao()
 
 let TrabalhadorModel = sequelize.define('trabalhadores', {
   id: {

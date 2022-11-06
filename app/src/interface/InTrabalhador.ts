@@ -1,5 +1,7 @@
 export interface InTrabalhador {
   id?: number,
   nome?: string,
-  email?: string
+  email?: string,
+  createdAt: Date,
+  updatedAt: Date
 }

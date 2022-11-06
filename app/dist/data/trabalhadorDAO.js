@@ -11,15 +11,80 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.trabalhadorDAO = void 0;
 const TrabalhadorModel_js_1 = require("./models/TrabalhadorModel.js");
+const db_js_1 = require("./db.js");
 class trabalhadorDAO {
     static cadastrar(trabalhador) {
         return __awaiter(this, void 0, void 0, function* () {
+            let sequelize = db_js_1.db.criarConexao();
             try {
                 yield TrabalhadorModel_js_1.TrabalhadorModel.create({ nome: trabalhador.Nome, email: trabalhador.Email });
                 console.log(`${trabalhador.Nome} cadastrado com sucesso.`);
             }
             catch (err) {
                 throw err;
+            }
+            finally {
+                sequelize.close();
+            }
+        });
+    }
+    static selecionarTodos() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sequelize = db_js_1.db.criarConexao();
+            try {
+                let dados = yield TrabalhadorModel_js_1.TrabalhadorModel.findAll();
+                let trabalhadoresJSON = [];
+                dados.forEach((trabalhador) => {
+                    trabalhadoresJSON.push(trabalhador.toJSON());
+                });
+                return trabalhadoresJSON;
+            }
+            catch (err) {
+                throw err;
+            }
+            finally {
+                sequelize.close();
+            }
+        });
+    }
+    static modificarTrabalhador(trabalhador) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sequelize = db_js_1.db.criarConexao();
+            try {
+                let linhasModificadas = yield TrabalhadorModel_js_1.TrabalhadorModel.update({
+                    nome: trabalhador.nome,
+                    email: trabalhador.email
+                }, {
+                    where: {
+                        id: trabalhador.id
+                    }
+                });
+                return linhasModificadas[0];
+            }
+            catch (err) {
+                throw err;
+            }
+            finally {
+                sequelize.close();
+            }
+        });
+    }
+    static deletarTrabalhador(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sequelize = db_js_1.db.criarConexao();
+            try {
+                let linhasModificadas = yield TrabalhadorModel_js_1.TrabalhadorModel.destroy({
+                    where: {
+                        id: id
+                    }
+                });
+                return linhasModificadas;
+            }
+            catch (err) {
+                throw err;
+            }
+            finally {
+                sequelize.close();
             }
         });
     }

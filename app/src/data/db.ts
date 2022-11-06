@@ -1,5 +1,14 @@
 import { Sequelize } from "sequelize"
 
+class db {
+  static criarConexao(): Sequelize {
+    return new Sequelize('trabalhadores', 'root', '', {
+      host: 'localhost',
+      dialect: 'mysql'
+    })
+  }
+}
+
 let sequelize = new Sequelize('trabalhadores', 'root', '', {
   host: 'localhost',
   dialect: 'mysql'
@@ -13,4 +22,4 @@ sequelize.authenticate()
     console.log(`Erro na conexão com o banco. ${err}.`)
   })
 
-export{ sequelize }
+export{ db }

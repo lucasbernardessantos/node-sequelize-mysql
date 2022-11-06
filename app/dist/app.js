@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Trabalhador_js_1 = require("./models/Trabalhador.js");
 const trabalhadorDAO_js_1 = require("./data/trabalhadorDAO.js");
-const db = require('./data/db.js');
 const app = (0, express_1.default)();
 const port = process.env.port || 8080;
 app.use(express_1.default.json());
@@ -25,9 +24,23 @@ app.listen(port, () => {
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).send('Página Inicial');
 }));
-app.post('/cadastrarTrabalhador', (req, res) => {
+app.post('/cadastrarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let auxTrabalhador = req.body;
     let trabalhador = new Trabalhador_js_1.Trabalhador(0, auxTrabalhador.nome, auxTrabalhador.email);
-    trabalhadorDAO_js_1.trabalhadorDAO.cadastrar(trabalhador);
-    res.status(201).send('Trabalhador cadastrado com sucesso.');
-});
+    yield trabalhadorDAO_js_1.trabalhadorDAO.cadastrar(trabalhador);
+    res.status(200).send('Trabalhador cadastrado com sucesso.');
+}));
+app.get('/selecionarTodos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let trabalhadores = yield trabalhadorDAO_js_1.trabalhadorDAO.selecionarTodos();
+    res.status(200).send(trabalhadores);
+}));
+app.put('/modificarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let auxTrabalhador = req.body;
+    let linhasModificadas = yield trabalhadorDAO_js_1.trabalhadorDAO.modificarTrabalhador(auxTrabalhador);
+    res.status(200).send(`Trabalhador atualizado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`);
+}));
+app.delete('/deletarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let auxTrabalhador = req.body;
+    let linhasModificadas = yield trabalhadorDAO_js_1.trabalhadorDAO.deletarTrabalhador(auxTrabalhador.id);
+    res.status(200).send(`Trabalhador deletado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`);
+}));

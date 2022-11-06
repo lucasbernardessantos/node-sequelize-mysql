@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 import { InTrabalhador } from './interface/InTrabalhador'
 import { Trabalhador } from './models/Trabalhador.js'
 import { trabalhadorDAO } from './data/trabalhadorDAO.js'
-const db = require('./data/db.js')
 
 const app = express()
 const port = process.env.port || 8080
@@ -17,12 +16,35 @@ app.get('/', async (req: Request, res: Response) => {
   res.status(200).send('Página Inicial') 
 })
 
-app.post('/cadastrarTrabalhador', (req: Request, res: Response) => {
+app.post('/cadastrarTrabalhador', async (req: Request, res: Response) => {
   let auxTrabalhador: InTrabalhador = req.body
 
   let trabalhador = new Trabalhador(0, auxTrabalhador.nome!, auxTrabalhador.email!)
 
-  trabalhadorDAO.cadastrar(trabalhador)
+  await trabalhadorDAO.cadastrar(trabalhador)
 
-  res.status(201).send('Trabalhador cadastrado com sucesso.')
+  res.status(200).send('Trabalhador cadastrado com sucesso.')
+})
+
+app.get('/selecionarTodos', async (req: Request, res: Response) => {
+
+  let trabalhadores: InTrabalhador[] = await trabalhadorDAO.selecionarTodos()
+
+  res.status(200).send(trabalhadores) 
+})
+
+app.put('/modificarTrabalhador', async (req: Request, res: Response) => {
+  let auxTrabalhador: InTrabalhador = req.body
+
+  let linhasModificadas = await trabalhadorDAO.modificarTrabalhador(auxTrabalhador)
+
+  res.status(200).send(`Trabalhador atualizado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`)
+})
+
+app.delete('/deletarTrabalhador', async (req: Request, res: Response) => {
+  let auxTrabalhador: InTrabalhador = req.body
+
+  let linhasModificadas = await trabalhadorDAO.deletarTrabalhador(auxTrabalhador.id!)
+
+  res.status(200).send(`Trabalhador deletado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`)
 })
