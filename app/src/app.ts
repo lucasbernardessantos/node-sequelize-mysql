@@ -28,7 +28,9 @@ app.post('/cadastrarTrabalhador', async (req: Request, res: Response) => {
 
 app.get('/selecionarTodos', async (req: Request, res: Response) => {
 
-  let trabalhadores: InTrabalhador[] = await trabalhadorDAO.selecionarTodos()
+  let trabalhadores = await trabalhadorDAO.selecionarTodos()
+
+  console.log(trabalhadores)
 
   res.status(200).send(trabalhadores) 
 })

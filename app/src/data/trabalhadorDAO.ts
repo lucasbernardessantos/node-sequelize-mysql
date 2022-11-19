@@ -9,7 +9,6 @@ export class trabalhadorDAO {
     
     try {
       await TrabalhadorModel.create({nome: trabalhador.Nome, email: trabalhador.Email}) 
-      console.log(`${trabalhador.Nome} cadastrado com sucesso.`)
     } catch (err) {
       throw err
     } finally {
@@ -17,17 +16,16 @@ export class trabalhadorDAO {
     }
   }
 
-  static async selecionarTodos(): Promise<InTrabalhador[]> {
+  static async selecionarTodos(): Promise<JSON[]> {
     let sequelize = db.criarConexao()
 
     try {
       let dados = await TrabalhadorModel.findAll()
-      let trabalhadoresJSON: InTrabalhador[] = []
+      let trabalhadoresJSON: JSON[] = []
 
       dados.forEach((trabalhador) => {
         trabalhadoresJSON.push(trabalhador.toJSON())
       })
-
       return trabalhadoresJSON
     } catch (err) {
       throw err

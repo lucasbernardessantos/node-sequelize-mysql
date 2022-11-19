@@ -32,6 +32,7 @@ app.post('/cadastrarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0
 }));
 app.get('/selecionarTodos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let trabalhadores = yield trabalhadorDAO_js_1.trabalhadorDAO.selecionarTodos();
+    console.log(trabalhadores);
     res.status(200).send(trabalhadores);
 }));
 app.put('/modificarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

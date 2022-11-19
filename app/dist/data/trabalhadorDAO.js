@@ -18,7 +18,6 @@ class trabalhadorDAO {
             let sequelize = db_js_1.db.criarConexao();
             try {
                 yield TrabalhadorModel_js_1.TrabalhadorModel.create({ nome: trabalhador.Nome, email: trabalhador.Email });
-                console.log(`${trabalhador.Nome} cadastrado com sucesso.`);
             }
             catch (err) {
                 throw err;
