@@ -26,7 +26,7 @@ app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.post('/cadastrarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let auxTrabalhador = req.body;
-    let trabalhador = new Trabalhador_js_1.Trabalhador(0, auxTrabalhador.nome, auxTrabalhador.email);
+    let trabalhador = new Trabalhador_js_1.Trabalhador(0, auxTrabalhador.nome, auxTrabalhador.email, auxTrabalhador.sexo, auxTrabalhador.salario);
     yield trabalhadorDAO_js_1.trabalhadorDAO.cadastrar(trabalhador);
     res.status(200).send('Trabalhador cadastrado com sucesso.');
 }));

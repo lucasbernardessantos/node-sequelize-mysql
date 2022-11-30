@@ -17,7 +17,7 @@ class trabalhadorDAO {
         return __awaiter(this, void 0, void 0, function* () {
             let sequelize = db_js_1.db.criarConexao();
             try {
-                yield TrabalhadorModel_js_1.TrabalhadorModel.create({ nome: trabalhador.Nome, email: trabalhador.Email });
+                yield TrabalhadorModel_js_1.TrabalhadorModel.create({ nome: trabalhador.Nome, email: trabalhador.Email, sexo: trabalhador.Sexo, salario: trabalhador.Salario });
             }
             catch (err) {
                 throw err;
@@ -52,7 +52,9 @@ class trabalhadorDAO {
             try {
                 let linhasModificadas = yield TrabalhadorModel_js_1.TrabalhadorModel.update({
                     nome: trabalhador.nome,
-                    email: trabalhador.email
+                    email: trabalhador.email,
+                    sexo: trabalhador.sexo,
+                    salario: trabalhador.salario
                 }, {
                     where: {
                         id: trabalhador.id

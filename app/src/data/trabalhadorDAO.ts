@@ -8,7 +8,7 @@ export class trabalhadorDAO {
     let sequelize = db.criarConexao()
     
     try {
-      await TrabalhadorModel.create({nome: trabalhador.Nome, email: trabalhador.Email}) 
+      await TrabalhadorModel.create({nome: trabalhador.Nome, email: trabalhador.Email, sexo: trabalhador.Sexo, salario: trabalhador.Salario}) 
     } catch (err) {
       throw err
     } finally {
@@ -40,7 +40,9 @@ export class trabalhadorDAO {
     try {
       let linhasModificadas = await TrabalhadorModel.update({
          nome: trabalhador.nome,
-         email: trabalhador.email
+         email: trabalhador.email,
+         sexo: trabalhador.sexo,
+         salario: trabalhador.salario
       }, {
         where: {
           id: trabalhador.id

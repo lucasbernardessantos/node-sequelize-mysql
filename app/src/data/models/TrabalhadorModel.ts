@@ -17,6 +17,14 @@ let TrabalhadorModel = sequelize.define('trabalhadores', {
   email: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  sexo: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  salario: {
+    type: DataTypes.FLOAT(6, 2),
+    allowNull: false
   }
 });
 

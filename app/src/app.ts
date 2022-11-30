@@ -19,7 +19,7 @@ app.get('/', async (req: Request, res: Response) => {
 app.post('/cadastrarTrabalhador', async (req: Request, res: Response) => {
   let auxTrabalhador: InTrabalhador = req.body
 
-  let trabalhador = new Trabalhador(0, auxTrabalhador.nome!, auxTrabalhador.email!)
+  let trabalhador = new Trabalhador(0, auxTrabalhador.nome!, auxTrabalhador.email!, auxTrabalhador.sexo!, auxTrabalhador.salario!)
 
   await trabalhadorDAO.cadastrar(trabalhador)
 
