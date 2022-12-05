@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const Trabalhador_js_1 = require("./models/Trabalhador.js");
 const trabalhadorDAO_js_1 = require("./data/trabalhadorDAO.js");
+const swagger_json_1 = __importDefault(require("./swagger.json"));
 const app = (0, express_1.default)();
 const port = process.env.port || 8080;
 app.use(express_1.default.json());
-app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
-});
+app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).send('Página Inicial');
 }));
@@ -32,16 +32,18 @@ app.post('/cadastrarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0
 }));
 app.get('/selecionarTodos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let trabalhadores = yield trabalhadorDAO_js_1.trabalhadorDAO.selecionarTodos();
-    console.log(trabalhadores);
     res.status(200).send(trabalhadores);
 }));
 app.put('/modificarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let auxTrabalhador = req.body;
     let linhasModificadas = yield trabalhadorDAO_js_1.trabalhadorDAO.modificarTrabalhador(auxTrabalhador);
-    res.status(200).send(`Trabalhador atualizado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`);
+    res.sendStatus(200).send(linhasModificadas);
 }));
 app.delete('/deletarTrabalhador', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let auxTrabalhador = req.body;
     let linhasModificadas = yield trabalhadorDAO_js_1.trabalhadorDAO.deletarTrabalhador(auxTrabalhador.id);
     res.status(200).send(`Trabalhador deletado com sucesso.\nLinhas Modificadas: ${linhasModificadas}`);
 }));
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`);
+});

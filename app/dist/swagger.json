@@ -1,0 +1,186 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CRUD API",
+        "description": "Essa API tem como objetivo a realização das operações CRUD da tabela trabalhadores",
+        "termsOfService": "http://localhost:8080/terms",
+        "contact": {
+            "email": "lucas.bernardes@soulasalle.com.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/cadastrarTrabalhador": {
+            "post": {
+                "summary": "Cadastrar novo trabalhador",
+                "description": "Rota responsável por cadastrar um novo trabalhador",
+                "tags": ["Trabalhador"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Trabalhadores"
+                            },
+                            "examples": {
+                                "trabalhador": {
+                                    "value": {
+                                        "nome": "Cassandra Addams",
+                                        "email": "cassandraAddams@gmail.com",
+                                        "sexo": "F",
+                                        "salario": 666.66
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Trabalhador cadastrado com sucesso"
+                    }
+                }
+            }
+        },
+        "/selecionarTodos": {
+            "get": {
+                "summary": "Selecionar todos os trabalhadores",
+                "description": "Rota responsável por selecionar todos os trabalhadores cadastrados do banco",
+                "tags": ["Trabalhador"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/Trabalhadores"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/modificarTrabalhador": {
+            "put": {
+                "summary": "Alterar trabalhador",
+                "description": "Rota responsável por alterar um trabalhador já cadastrado",
+                "tags": ["Trabalhador"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Trabalhadores"
+                            },
+                            "examples": {
+                                "trabalhador": {
+                                    "value": {
+                                        "id": 0,
+                                        "nome": "Cassandra Addams",
+                                        "email": "cassandraAddams@hotmail.com",
+                                        "sexo": "F",
+                                        "salario": 666.66
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Trabalhador alterado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "number",
+                                    "Linhas Modificadas": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deletarTrabalhador": {
+            "delete": {
+                "summary": "Deletar trabalhador",
+                "description": "Rota responsável por deletar um trabalhador cadastrado",
+                "tags": ["Trabalhador"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "trabalhador": {
+                                    "value": {
+                                        "id": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Trabalhador deletado com sucesso"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Trabalhadores": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "emai": {
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "type": "string"
+                    },
+                    "salario": {
+                        "type": "number"
+                    }
+                }
+            },
+            "TrabalhadorID": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "emai": {
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "type": "string"
+                    },
+                    "salario": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}
